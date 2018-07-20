@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/iTudou2016/snow/issues"
   },
-  "homepage": "https://github.com/iTudou2016/snow#readme"
+  "homepage": "https://github.com/iTudou2016/snow#readme",
+  "dependencies": {
+    "pug": "^2.0.3"
+  }
 }

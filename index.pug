@@ -48,7 +48,7 @@ html
                    div(class="text")
                      span 难度
                    div(class="value")
-                     span N/A
+                     span #{nodestate.difficulty}
              div(class="col-lg-4 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -57,7 +57,7 @@ html
                    div(class="text")
                      span 全网算力
                    div(class="value")
-                     span N/A
+                     span #{nodestate.networkhash}
              div(class="col-lg-4 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -66,7 +66,7 @@ html
                    div(class="text")
                      span 区块高度
                    div(class="value")
-                     span N/A
+                     span #{nodestate.blockheight}
              div(class="col-lg-4 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -75,7 +75,7 @@ html
                    div(class="text")
                      span 雪地狂欢
                    div(class="value")
-                     span N/A
+                     span #{nodestate.snowfield}
          p 活跃矿工列表： 
          div(class="card push-up-10")
            div(id="paymentsReport" class="table-responsive")

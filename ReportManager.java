@@ -69,6 +69,7 @@ public class ReportManager
         rate_map.remove(k);
       }
       out.println("{\"account\":\"hi\",\"hashrate\":\"hi\"}");
+      out.println("]\n}");
       out.flush();
       out.close();
     }

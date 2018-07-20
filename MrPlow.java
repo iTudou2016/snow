@@ -306,7 +306,7 @@ try
 
       out.println(String.format("\"difficulty\": \"%s (%s)\",", df.format(target_diff), df.format(avg_diff)));
       out.println(String.format("\"networkhash\": \"%s Mh/s\"", df.format(estimated_hash)));
-      out.println("\n}");
+      out.println("}");
       out.flush();
       out.close();
     }

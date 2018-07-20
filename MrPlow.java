@@ -203,12 +203,13 @@ public class MrPlow
     {
       PrintStream out = new PrintStream(new AtomicFileOutputStream( "share.json" ));
       out.println("{\n\"lastreport\":\"" + getChinaTime() + "\",");
+      out.println("\"poolfee\":\"" + config.getDouble("pool_fee") + "\",");
       out.println("\"miners\": [");
       for(Map.Entry<String, Double> me : share_manager.getPayRatios().entrySet())
       {
-          out.println(String.format("{\"account\":\"%s\", \"hashrate\":\"%s\"},", me.getKey(), me.getValue()));
+          out.println(String.format("{\"account\":\"%s\", \"shares\":\"%s\"},", me.getKey(), me.getValue()));
       }
-      out.println("{\"account\":\"Hi\", \"hashrate\":\"Hi\"}");
+      out.println("{\"account\":\"Hi\", \"shares\":\"Hi\"}");
       out.println("]\n}");
       out.flush();
       out.close();

@@ -94,11 +94,15 @@ html
                      span 矿池费率
                    div(class="value")
                      span #{share.poolfee}                     
-         p 活跃矿工列表： 
          div(class="card push-up-10")
            div(id="paymentsReport" class="table-responsive")
              table(class="table table-hover table-striped")
                 thead
+                  tr
+                     th(class="col1")
+                         span 活跃矿工列表：
+                     th(class="col2")
+                         span                 
                   tr
                      th(class="col1")
                          span 矿工
@@ -111,12 +115,15 @@ html
                            span #{item.account}
                         td(class="col2")
                            span #{item.hashrate}
-         p
-         p 矿工份额：   
          div(class="card push-up-10")
            div(id="paymentsReport" class="table-responsive")
              table(class="table table-hover table-striped")
                 thead
+                  tr
+                     th(class="col1")
+                         span 矿工份额：
+                     th(class="col2")
+                         span                 
                   tr
                      th(class="col1")
                          span 矿工

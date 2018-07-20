@@ -29,8 +29,9 @@ var port = server.address().port;
 
 function getShare(res) {
   var share=JSON.parse(fs.readFileSync( "/var/snowblossom/share.json"));
-  var report=JSON.parse(fs.readFileSync( "/var/snowblossom/report1.json"));
+  var report=JSON.parse(fs.readFileSync( "/var/snowblossom/report.json"));
+  var nodestate=JSON.parse(fs.readFileSync( "/var/snowblossom/nodestate.json"));
   report.miners.pop();
   share.miners.pop();
-  res.render('index', {title: 'SnowBlossom Pool', share: share, report: report});
+  res.render('index', {title: 'SnowBlossom Pool', share: share, report: report, nodestate: nodestate});
 }

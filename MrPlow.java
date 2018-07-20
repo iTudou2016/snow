@@ -203,7 +203,7 @@ public class MrPlow
     {
       PrintStream out = new PrintStream(new AtomicFileOutputStream( "share.json" ));
       out.println("{\n\"lastreport\":\"" + getChinaTime() + "\",");
-      out.println("\"poolfee\":\"" + config.getDouble("pool_fee") + "\",");
+      out.println("\"poolfee\":\"" + config.getDouble("pool_fee")*100 + "%\",");
       out.println("\"miners\": [");
       for(Map.Entry<String, Double> me : share_manager.getPayRatios().entrySet())
       {
@@ -291,7 +291,6 @@ public class MrPlow
 try
     {
       PrintStream out = new PrintStream(new AtomicFileOutputStream( "nodestate.json" ));
-     // NetworkParams params = shackleton.getParams();
       NodeStatus node_status = blockingStub.getNodeStatus(NullRequest.newBuilder().build());
       BlockSummary summary = node_status.getHeadSummary();
       BlockHeader header = summary.getHeader();
@@ -305,7 +304,7 @@ try
       double estimated_hash = Math.pow(2.0, target_diff) / block_time_sec / 1e6;
       DecimalFormat df =new DecimalFormat("0.000");
 
-      out.println(String.format("\"difficulty\": \"%s (%s)\",", df.format(target_diff), df.format(avg_diff)));
+      out.println(String.format("\"difficulty\": \"%s\",", df.format(target_diff)));
       out.println(String.format("\"networkhash\": \"%s Mh/s\"", df.format(estimated_hash)));
       out.println("}");
       out.flush();

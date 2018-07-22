@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 public class ReportManager
@@ -41,7 +42,7 @@ public class ReportManager
     return total;
   }
 
-  public synchronized void writeReport(String path)
+  public synchronized void writeReport(String path, Map<String, String> netstate, Map<String, Double> share)
   {
     try
     {
@@ -50,7 +51,11 @@ public class ReportManager
 
       DecimalFormat df = new DecimalFormat("0.0");
       out.println("{\n\"poolhash\":\"" + total.getReportLong(df) + "\",");
-      out.println("\"miners\": [");
+      for(Map.Entry<String, String> me : netstate.entrySet())
+      {
+          out.println(String.format("\"%s\":\"%s\",", me.getKey(), me.getValue()));
+      }
+      out.println("\"hashrate\": [");
       TreeSet<String> to_remove = new TreeSet<>();
       for(Map.Entry<String, RateReporter> me : rate_map.entrySet())
       {
@@ -68,7 +73,13 @@ public class ReportManager
       {
         rate_map.remove(k);
       }
-      out.println("{\"account\":\"hi\",\"hashrate\":\"hi\"}");
+      out.println("{\"account\":\"hi\",\"hashrate\":\"hi\"}\n],");
+      out.println("\"share\": [");
+      for(Map.Entry<String, Double> me : share.entrySet())
+      {
+          out.println(String.format("{\"account\":\"%s\", \"shares\":\"%s\"},", me.getKey(), me.getValue()));
+      }
+      out.println("{\"account\":\"Hi\", \"shares\":\"Hi\"}");
       out.println("]\n}");
       out.flush();
       out.close();

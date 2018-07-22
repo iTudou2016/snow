@@ -17,7 +17,7 @@ html
            span 当前时间: 
            span("id=currenttime") 
          div
-           span 报告时间:  #{share.lastreport}
+           span 报告时间:  #{report.lastreport}
          script(type="text/javascript")
              |setInterval(function() {document.getElementById("currenttime").innerHTML=new Date().toLocaleTimeString() ;},1000);
          div(id="page")
@@ -39,7 +39,7 @@ html
                    div(class="text")
                      span 已发现区块
                    div(class="value")
-                     span N/A
+                     span #{report.lastfound}
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -48,16 +48,16 @@ html
                    div(class="text")
                      span 难度
                    div(class="value")
-                     span #{nodestate.difficulty}
+                     span #{report.difficulty}
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
                    span(class="fa fa-usd") 
                  div(class="content")
                    div(class="text")
-                     span 最近奖励
+                     span 在线矿机
                    div(class="value")
-                     span N/A                     
+                     span #{report.workers}                     
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -66,7 +66,7 @@ html
                    div(class="text")
                      span 全网算力
                    div(class="value")
-                     span #{nodestate.networkhash}
+                     span #{report.networkhash}
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -75,7 +75,7 @@ html
                    div(class="text")
                      span 区块高度
                    div(class="value")
-                     span #{nodestate.blockheight}
+                     span #{report.blockheight}
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -84,7 +84,7 @@ html
                    div(class="text")
                      span 雪地狂欢
                    div(class="value")
-                     span #{nodestate.snowfield}
+                     span #{report.snowfield}
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
@@ -93,7 +93,7 @@ html
                    div(class="text")
                      span 矿池费率
                    div(class="value")
-                     span #{share.poolfee}                     
+                     span #{report.poolfee}                     
          div(class="card push-up-10")
            div(id="paymentsReport" class="table-responsive")
              table(class="table table-hover table-striped")
@@ -109,7 +109,7 @@ html
                      th(class="col2")
                          span 算力
                 tbody   
-                  for item in report.miners                     
+                  for item in report.hashrate                     
                      tr
                         td(class="col1")
                            span #{item.account}
@@ -130,7 +130,7 @@ html
                      th(class="col2")
                          span 份额
                 tbody   
-                  for item in share.miners                     
+                  for item in report.share                     
                      tr
                         td(class="col1")
                            span #{item.account}

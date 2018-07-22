@@ -20,6 +20,7 @@ import java.io.PrintStream;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
+import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.Locale;
 import java.util.Date;
@@ -47,6 +48,9 @@ public class MrPlow
   // So as it is set, if a miner gets 12 shares inside of 2 minutes, move them up.
   public static final long SHARE_VIEW_WINDOW = 120000L;
   public static final int SHARES_IN_VIEW_FOR_RETARGET = 12;
+  public HashMap<String, String> netstate = new HashMap<String, String>();
+//  public HashMap<String, HashMap> netAPI = new HashMap<String, HashMap>();
+
 
   public static void main(String args[]) throws Exception
   {
@@ -181,8 +185,9 @@ public class MrPlow
       {
       if (last_report + 60000L < System.currentTimeMillis())
       {
-        report_manager.writeReport(config.get("report_path"));
-	reportShare();
+        netstate.put("lastreport", getChinaTime());
+        netstate.put("poolfee", config.getDouble("pool_fee")*100 +"%");
+        report_manager.writeReport(config.get("report_path"), netstate, share_manager.getPayRatios());
         last_report = System.currentTimeMillis();
       }
       }
@@ -297,15 +302,19 @@ try
       SnowFieldInfo sf = params.getSnowFieldInfo(summary.getActivatedField());
       out.println(String.format("{\n\"snowfield\": \"%s %s\",", summary.getActivatedField(), sf.getName()));
       out.println(String.format("\"blockheight\": \"%s\",", header.getBlockHeight()));
+      netstate.put("snowfield", summary.getActivatedField() + " " + sf.getName());
+      netstate.put("blockheight", header.getBlockHeight()+"");
 
       double avg_diff = PowUtil.getDiffForTarget(BlockchainUtil.readInteger(summary.getTargetAverage()));
       double target_diff = PowUtil.getDiffForTarget(BlockchainUtil.targetBytesToBigInteger(header.getTarget()));
       double block_time_sec = summary.getBlocktimeAverageMs() / 1000.0 ;
       double estimated_hash = Math.pow(2.0, target_diff) / block_time_sec / 1e6;
-      DecimalFormat df =new DecimalFormat("0.000");
+      DecimalFormat df =new DecimalFormat("0.0");
 
       out.println(String.format("\"difficulty\": \"%s\",", df.format(target_diff)));
       out.println(String.format("\"networkhash\": \"%s Mh/s\"", df.format(estimated_hash)));
+      netstate.put("difficulty", df.format(target_diff));
+      netstate.put("networkhash", df.format(estimated_hash)+"M/s");
       out.println("}");
       out.flush();
       out.close();
@@ -336,6 +345,7 @@ try
   public UserServiceBlockingStub getBlockingStub(){return blockingStub;}
   public ShareManager getShareManager(){return share_manager;}
   public ReportManager getReportManager(){return report_manager;}
+  public HashMap getNetstate() {return netstate;}
 
   public void printStats()
   {

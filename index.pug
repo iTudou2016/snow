@@ -8,17 +8,18 @@ html
     link(href="/css/default.css" rel="stylesheet")
     title!=title
     link(REL='SHORTCUT ICON' href='https://snowblossom.org/snow-icon.png')
+    style(type="text/css").
+      .hostname {color:#2f2f4f;font-size: 22px;line-height: 50px;}
   body
     div(id="wrapper")
        div(id="top-bar")
-          div(id="section")
-              span  pool_host=snow.cnpool.vip
-          div(id="section")
-              span(id="statsUpdated") 报告时间:  #{report.lastreport}
        div(id="page-wrapper")
          script(type="text/javascript")
              |setInterval(function() {document.getElementById("currenttime").innerHTML=new Date().toLocaleTimeString() ;},1000);
          div(id="page")
+           h1  SnowBlossom Pool  
+           div(id="section")
+              span(class="hostname") pool_host=snow.cnpool.vip
            div(id="poolStats" class="row")
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")

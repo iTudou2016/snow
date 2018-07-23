@@ -49,7 +49,6 @@ public class MrPlow
   public static final long SHARE_VIEW_WINDOW = 120000L;
   public static final int SHARES_IN_VIEW_FOR_RETARGET = 12;
   public HashMap<String, String> netstate = new HashMap<String, String>();
-//  public HashMap<String, HashMap> netAPI = new HashMap<String, HashMap>();
 
 
   public static void main(String args[]) throws Exception
@@ -183,11 +182,11 @@ public class MrPlow
 
       if (config.isSet("report_path"))
       {
-      if (last_report + 60000L < System.currentTimeMillis())
+      if (last_report + 30000L < System.currentTimeMillis())
       {
         netstate.put("lastreport", getChinaTime());
         netstate.put("poolfee", config.getDouble("pool_fee")*100 +"%");
-        report_manager.writeReport(config.get("report_path"), netstate, share_manager.getPayRatios());
+        report_manager.writeReport(config.get("report_path"), netstate, share_manager.getPayRatios(), block_map);
         last_report = System.currentTimeMillis();
       }
       }
@@ -201,29 +200,6 @@ public class MrPlow
     simpleDateFormat.setTimeZone(timeZone);
     return simpleDateFormat.format(new Date());
   }
-
-  private synchronized void reportShare()
-  {
-   try
-    {
-      PrintStream out = new PrintStream(new AtomicFileOutputStream( "share.json" ));
-      out.println("{\n\"lastreport\":\"" + getChinaTime() + "\",");
-      out.println("\"poolfee\":\"" + config.getDouble("pool_fee")*100 + "%\",");
-      out.println("\"miners\": [");
-      for(Map.Entry<String, Double> me : share_manager.getPayRatios().entrySet())
-      {
-          out.println(String.format("{\"account\":\"%s\", \"shares\":\"%s\"},", me.getKey(), me.getValue()));
-      }
-      out.println("{\"account\":\"Hi\", \"shares\":\"Hi\"}");
-      out.println("]\n}");
-      out.flush();
-      out.close();
-    }
-    catch(Exception e)
-    {
-      logger.log(Level.WARNING, "Error writing report: " + e.toString());
-    } 
-  }  
 
   private void saveState()
   {
@@ -247,6 +223,29 @@ public class MrPlow
         share_manager.prune(shares_to_keep);
       }
   }
+
+  public TreeMap<String, Integer> block_map = new TreeMap<>();
+  public static final int LOOK_BACK=1000;
+  private void countFound(NodeStatus ns, UserServiceBlockingStub blockingStub, String remark, TreeMap<String, Integer> blockfound)
+  {
+    if (ns.getHeadSummary().getHeader().getBlockHeight() < LOOK_BACK) return;
+    ChainHash prev = new ChainHash(ns.getHeadSummary().getHeader().getSnowHash());
+    int blocks = 0;
+
+    while(blocks < LOOK_BACK)
+    {
+      CoinbaseExtras extras = null;
+      Block blk = blockingStub.getBlock(RequestBlock.newBuilder().setBlockHash(prev.getBytes()).build());
+      extras = TransactionUtil.getInner(blk.getTransactions(0)).getCoinbaseExtras();
+      if (remark.equals(HexUtil.getSafeString(extras.getRemarks()))) 
+      {
+        blockfound.put(prev.toString(), blk.getHeader().getBlockHeight());
+      }
+      prev = new ChainHash(blk.getHeader().getPrevBlockHash());
+      blocks++;
+    }
+  }
+
   private void subscribe() throws Exception
   {
     if (channel != null)
@@ -293,15 +292,10 @@ public class MrPlow
                                      new BlockTemplateEater());
     logger.info("Subscribed to blocks");
 
-try
-    {
-      PrintStream out = new PrintStream(new AtomicFileOutputStream( "nodestate.json" ));
       NodeStatus node_status = blockingStub.getNodeStatus(NullRequest.newBuilder().build());
       BlockSummary summary = node_status.getHeadSummary();
       BlockHeader header = summary.getHeader();
       SnowFieldInfo sf = params.getSnowFieldInfo(summary.getActivatedField());
-      out.println(String.format("{\n\"snowfield\": \"%s %s\",", summary.getActivatedField(), sf.getName()));
-      out.println(String.format("\"blockheight\": \"%s\",", header.getBlockHeight()));
       netstate.put("snowfield", summary.getActivatedField() + " " + sf.getName());
       netstate.put("blockheight", header.getBlockHeight()+"");
 
@@ -311,18 +305,9 @@ try
       double estimated_hash = Math.pow(2.0, target_diff) / block_time_sec / 1e6;
       DecimalFormat df =new DecimalFormat("0.0");
 
-      out.println(String.format("\"difficulty\": \"%s\",", df.format(target_diff)));
-      out.println(String.format("\"networkhash\": \"%s Mh/s\"", df.format(estimated_hash)));
       netstate.put("difficulty", df.format(target_diff));
       netstate.put("networkhash", df.format(estimated_hash)+"M/s");
-      out.println("}");
-      out.flush();
-      out.close();
-    }
-    catch(Exception e)
-    {
-      logger.log(Level.WARNING, "Error writing report: " + e.toString());
-    }
+      countFound(node_status,blockingStub,config.get("remark"),block_map);
 
   }
 

@@ -28,11 +28,9 @@ var port = server.address().port;
 });
 
 function getShare(res) {
-//  var share=JSON.parse(fs.readFileSync( "../source/share.json"));
   var report=JSON.parse(fs.readFileSync( "../source/report.json"));
-//  var nodestate=JSON.parse(fs.readFileSync( "../source/nodestate.json"));
   report.share.pop();
   report.hashrate.pop();
-//  share.miners.pop();
+  report.blockfound.pop();
   res.render('index', {title: 'SnowBlossom Pool', report: report});
 }

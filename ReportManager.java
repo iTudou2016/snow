@@ -42,7 +42,7 @@ public class ReportManager
     return total;
   }
 
-  public synchronized void writeReport(String path, Map<String, String> netstate, Map<String, Double> share)
+  public synchronized void writeReport(String path, Map<String, String> netstate, Map<String, Double> share, Map<String,Integer> blockfound)
   {
     try
     {
@@ -55,6 +55,7 @@ public class ReportManager
       {
           out.println(String.format("\"%s\":\"%s\",", me.getKey(), me.getValue()));
       }
+      //hashrate
       out.println("\"hashrate\": [");
       TreeSet<String> to_remove = new TreeSet<>();
       for(Map.Entry<String, RateReporter> me : rate_map.entrySet())
@@ -74,13 +75,22 @@ public class ReportManager
         rate_map.remove(k);
       }
       out.println("{\"account\":\"hi\",\"hashrate\":\"hi\"}\n],");
+      //blockfound.
+      out.println("\"blockfound\": [");
+      for(Map.Entry<String, Integer> me : blockfound.entrySet())
+      {
+          out.println(String.format("{\"account\":\"%s\", \"blockNum\":\"%s\"},", me.getKey(), me.getValue()));
+      }
+      out.println("{\"account\":\"hi\",\"blockNum\":\"hi\"}\n],");  
+      //share.
       out.println("\"share\": [");
       for(Map.Entry<String, Double> me : share.entrySet())
       {
           out.println(String.format("{\"account\":\"%s\", \"shares\":\"%s\"},", me.getKey(), me.getValue()));
       }
-      out.println("{\"account\":\"Hi\", \"shares\":\"Hi\"}");
-      out.println("]\n}");
+      out.println("{\"account\":\"Hi\", \"shares\":\"Hi\"}\n]");
+      //end without ,
+      out.println("}");
       out.flush();
       out.close();
     }

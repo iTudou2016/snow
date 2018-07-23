@@ -120,8 +120,8 @@ footer > div{
 @media (min-width: 992px) {
   #page-wrapper {
     position: inherit;
-    margin: 0 60px 0 60px;
-    padding: 0px 30px 0 30px;
+    margin: 0 0 0 225px;
+    padding: 60px 30px 0 30px;
   }
 }
 #loading{
@@ -935,7 +935,7 @@ table th.sort:hover{
     white-space: nowrap;
   }
   #paymentsReport table .col1 {
-    width:550px;
+    width:190px;
   }  
   #paymentsReport table .col2 {
     overflow: hidden;

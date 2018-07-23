@@ -100,6 +100,27 @@ html
                 thead
                   tr
                      th(class="col1")
+                         span 已发现区块
+                     th(class="col2")
+                         span           
+                  tr
+                     th(class="col1")
+                         span 区块Hash
+                     th(class="col2")
+                         span 区块编号
+                tbody   
+                  for item in report.blockfound                     
+                     tr
+                        td(class="col1")
+                           span #{item.account}
+                        td(class="col2")
+                           span #{item.blockNum}           
+         div(class="card push-up-10")
+           div(id="paymentsReport" class="table-responsive")
+             table(class="table table-hover table-striped")
+                thead
+                  tr
+                     th(class="col1")
                          span 活跃账号列表：
                      th(class="col2")
                          span                 
@@ -112,7 +133,8 @@ html
                   for item in report.hashrate                     
                      tr
                         td(class="col1")
-                           span #{item.account}
+                           span
+                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + item.account) #{item.account}
                         td(class="col2")
                            span #{item.hashrate}
          div(class="card push-up-10")

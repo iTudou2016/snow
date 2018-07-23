@@ -8,16 +8,16 @@ html
     link(href="/css/default.css" rel="stylesheet")
     title!=title
     style(type="text/css").
-      h2 {color:red;}
+      h2 {color:blue;}
   body
     div(id="wrapper")
        div(id="page-wrapper")
          h1  SnowBlossom Pool 
          div
-           span 矿池地址: pool_host=snow.cnpool.vip
+           h2 矿池地址: pool_host=snow.cnpool.vip
          div
            span 报告时间:  #{report.lastreport}
-           span "||当前时间: "
+           span ||当前时间: 
            span("id=currenttime")          
          script(type="text/javascript")
              |setInterval(function() {document.getElementById("currenttime").innerHTML=new Date().toLocaleTimeString() ;},1000);

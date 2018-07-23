@@ -112,7 +112,8 @@ html
                   for item in report.blockfound                     
                      tr
                         td(class="col1")
-                           span #{item.account}
+                           span
+                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + item.account) #{item.account}
                         td(class="col2")
                            span #{item.blockNum}           
          div(class="card push-up-10")
@@ -133,8 +134,7 @@ html
                   for item in report.hashrate                     
                      tr
                         td(class="col1")
-                           span
-                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + item.account) #{item.account}
+                           span #{item.account}                             
                         td(class="col2")
                            span #{item.hashrate}
          div(class="card push-up-10")

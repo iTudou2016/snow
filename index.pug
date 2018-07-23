@@ -1,4 +1,4 @@
-﻿doctype html
+doctype html
 html
   head
     meta(charset='utf-8' name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1")
@@ -7,19 +7,36 @@ html
     link(href="//cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet")
     link(href="/css/default.css" rel="stylesheet")
     title!=title
-    style(type="text/css").
-      h3 {color:blue;}
+    link(REL='SHORTCUT ICON' href='https://snowblossom.org/snow-icon.png')
   body
     div(id="wrapper")
+       div(class="nav-side-menu")
+           div(class="brand")
+               a(href="http://www.cnpool.vip") SnowBlossom 矿池
+           div(class="menu-list")
+                ul(id="menu-content" class="menu-content collapsed out")       
+                    li
+                        a(class="hot_link" data-page="home.html" href="#")
+                              i(class="fa fa-home")
+                              span 主控面板
+                    li
+                        a(class="hot_link" data-page="home.html" href="#")
+                              i(class="fa fa-home")
+                              span 矿工数据
+                    li
+                        a(class="hot_link" href="https://snowblossom.org/")
+                              i(class="fa fa-snowflake-o")
+                              span Snow官网
+                    li
+                        a(class="hot_link" href="https://explorer.snowblossom.org/")
+                              i(class="fa fa-snowflake-o")
+                              span Explorer
+       div(id="top-bar")
+          div(id="section")
+              span  矿池地址: pool_host=snow.cnpool.vip
+          div(id="section")
+              span(id="statsUpdated") 报告时间:  #{report.lastreport}
        div(id="page-wrapper")
-         h1  SnowBlossom Pool 
-         div
-           span 矿池地址: pool_host=snow.cnpool.vip
-         div
-           span 当前时间: 
-           span("id=currenttime")             
-         div
-           span 报告时间:  #{report.lastreport}
          script(type="text/javascript")
              |setInterval(function() {document.getElementById("currenttime").innerHTML=new Date().toLocaleTimeString() ;},1000);
          div(id="page")
@@ -27,7 +44,7 @@ html
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
-                   span(class="fa fa-arrows fa-spin fa-fw") 
+                   span(class="fa fa-arrows fa-fw") 
                  div(class="content")
                    div(class="text")
                      span 矿池算力
@@ -63,7 +80,7 @@ html
              div(class="col-lg-3 col-sm-4")
                div(class="infoBox hoverExpandEffect")
                  div(class="icon")
-                   span(class="fa fa-cog fa-spin fa-fw") 
+                   span(class="fa fa-cog fa-fw") 
                  div(class="content")
                    div(class="text")
                      span 全网算力
@@ -96,67 +113,74 @@ html
                      span 矿池费率
                    div(class="value")
                      span #{report.poolfee}                     
-         div(class="card push-up-10")
-           div(id="paymentsReport" class="table-responsive")
-             table(class="table table-hover table-striped")
+         div(class="card")
+           div(id="top10miners" class="table-responsive")
+             table(class="table table table-striped")
                 thead
                   tr
-                     th(class="col1")
-                         span 矿池区块（最近1000 Block）：
-                     th(class="col2")
-                         span           
-                  tr
-                     th(class="col1")
-                         span 区块Hash
-                     th(class="col2")
-                         span 区块编号
-                tbody   
-                  for item in report.blockfound                     
-                     tr
-                        td(class="col1")
-                           span
-                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + item.account) #{item.account}
-                        td(class="col2")
-                           span #{item.blockNum}           
-         div(class="card push-up-10")
-           div(id="paymentsReport" class="table-responsive")
-             table(class="table table-hover table-striped")
-                thead
-                  tr
-                     th(class="col1")
+                     th(class="col2 sort")
                          span 活跃账号：
-                     th(class="col2")
+                     th(class="col2 sort")
                          span                 
                   tr
-                     th(class="col1")
+                     th(class="col2 sort")
                          span 账号
-                     th(class="col2")
+                     th(class="col2 sort")
                          span 算力
                 tbody   
                   for item in report.hashrate                     
                      tr
-                        td(class="col1")
+                        td(class="col2 sort")
                            span #{item.account}                             
-                        td(class="col2")
+                        td(class="col2 sort")
                            span #{item.hashrate}
-         div(class="card push-up-10")
-           div(id="paymentsReport" class="table-responsive")
-             table(class="table table-hover table-striped")
+         div(class="card")
+           div(id="top10miners" class="table-responsive")
+             table(class="table table table-striped")
                 thead
                   tr
-                     th(class="col1")
+                     th(class="col2 sort")
                          span 账号份额：
-                     th(class="col2")
+                     th(class="col2 sort")
                          span                 
                   tr
-                     th(class="col1")
+                     th(class="col2 sort")
                          span 账号
-                     th(class="col2")
+                     th(class="col2 sort")
                          span 份额
                 tbody   
                   for item in report.share                     
                      tr
-                        td(class="col1")
+                        td(class="col2 sort")
                            span #{item.account}
-                        td(class="col2")
+                        td(class="col2 sort")
                            span #{item.shares}
+         div(class="card")
+           div(id="top10miners" class="table-responsive")
+             table(class="table table table-striped")
+                thead
+                  tr
+                     th(class="col2 sort")
+                         span 矿池区块（最近1000 Block）：
+                     th(class="col2 sort")
+                         span           
+                  tr
+                     th(class="col2 sort")
+                         span 区块Hash
+                     th(class="col2 sort")
+                         span 区块编号
+                tbody   
+                  for item in report.blockfound                     
+                     tr
+                        td(class="col2 sort")
+                           span
+                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + item.account) #{item.account}
+                        td(class="col2 sort")
+                           span #{item.blockNum}                    
+    footer
+      div(class="text-muted")
+         span Powered by 
+             a(target="_blank" href="http://www.cnpool.vip")
+                i(class="fa fa-snowflake-o")
+                span  www.cnpool.vip 泥巴池 
+                i(class="fa fa-snowflake-o")

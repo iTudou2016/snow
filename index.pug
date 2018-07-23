@@ -146,17 +146,16 @@ html
                          span           
                   tr
                      th(class="col2 sort")
-                         span 区块Hash
+                         span 挖矿小能手
                      th(class="col2 sort")
-                         span 区块编号
+                         span 区块高度
                 tbody   
                   for item in report.blockfound                     
                      tr
                         td(class="col2 sort")
-                           span
-                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + item.account) #{item.account}
+                           span #{item.account}                             
                         td(class="col2 sort")
-                           span #{item.blockNum}                    
+                           span a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + #{item.blockNum}) #{item.blockNum}
     footer
       div(class="text-muted")
          span Powered by 

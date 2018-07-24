@@ -147,7 +147,7 @@ html
                          span           
                   tr
                      th(class="col2 sort")
-                         span 挖矿小能手
+                         span 区块Hash
                      th(class="col2 sort")
                          span 区块高度
                 tbody   
@@ -156,7 +156,8 @@ html
                         td(class="col2 sort")
                            span #{item.account}                             
                         td(class="col2 sort")
-                           span a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + #{item.blockNum}) #{item.blockNum}
+                           span
+                             a(target= "_blank" href="https://explorer.snowblossom.org/?search=" + #{item.blockNum}) #{item.blockNum}
     footer
       div(class="text-muted")
          span Powered by 

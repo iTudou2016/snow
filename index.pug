@@ -135,7 +135,8 @@ html
                         td(class="col2 sort")
                            span #{item.account}
                         td(class="col2 sort")
-                           span #{item.shares}
+                           - var shares=Number(item.shares).toFixed(0)
+                           span #{shares}
          div(class="card")
            div(id="top10miners" class="table-responsive")
              table(class="table table table-striped")

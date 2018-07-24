@@ -1,0 +1,29 @@
+{
+"poolhash":"5-min: 0.0/s, 15-min: 0.0/s, hour: 0.0/s",
+"difficulty":"39.7",
+"networkhash":"1925.3M/s",
+"snowfield":"7 llama",
+"poolfee":"0.88%",
+"lastreport":"下午2:47:50",
+"workers":"0",
+"blockheight":"11076",
+"hashrate": [
+{"account":"hi","hashrate":"hi"}
+],
+"blockfound": [
+{"account":"00000000006dd04733b65e19dfba28609e35d5d413dd4ae28142c10da66cd6ab", "blockNum":"10768"},
+{"account":"00000000006f612a1c95df466b744a15703773efbb22706ddd1125f473bee136", "blockNum":"10765"},
+{"account":"00000000007c326871786183e51c6d7512b7028f8b83e6a695d5f6524f3199b5", "blockNum":"10751"},
+{"account":"0000000000a55156b22be6892b24e72a471c8624057fcfb2396da2dbaa5a9075", "blockNum":"10696"},
+{"account":"0000000000ac7711a4e5252d752dedd96d753bdf42391082c2b88b4cfca96977", "blockNum":"10670"},
+{"account":"0000000000e9c28e7ad22a7250971cfd2fa3f30b5d08c9433ced98c10c8aa947", "blockNum":"10664"},
+{"account":"hi","blockNum":"hi"}
+],
+"share": [
+{"account":"snow:0hagpky6vp0t24dnvc7pkm74faklhxn3934q76t4", "shares":"152559.0"},
+{"account":"snow:6nte5q2y7jcgwsryykr7hqpmw3v4c0lsapak7ns6", "shares":"281667.0"},
+{"account":"snow:96trlgsxxtwmvj4wyaxmjxr2knfeshfjcm0mfdfw", "shares":"451758.0"},
+{"account":"snow:wuca3rhtfcmh0f3f7qnv4cqz6nhamfnpj04rlyym", "shares":"7865.878934624697"},
+{"account":"Hi", "shares":"Hi"}
+]
+}

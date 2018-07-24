@@ -9,7 +9,7 @@ html
     title!=title
     link(REL='SHORTCUT ICON' href='https://snowblossom.org/snow-icon.png')
     style(type="text/css").
-      .hostname {color:#2f2f4f;font-size: 22px;line-height: 50px;}
+      .hostname {color:#0066cc;font-size: 22px;line-height: 50px;}
       h2 {color: #0066cc;font-size: 32px;}
   body
     div(id="wrapper")
@@ -54,14 +54,14 @@ html
            div(id="section")
               span(class="hostname") pool_host=snow.cnpool.vip
            div(id="poolStats" class="row")
-             +infobox("fa fa-arrows", "矿池算力", poolhash)
-             +infobox("fa fa-cubes", "已发现区块（最近1000 Block）", report.blockfound.length)
-             +infobox("fa fa-unlock-alt", "难度", report.difficulty)
-             +infobox("fa fa-usd", "在线矿机", report.workers)
-             +infobox("fa fa-cog", "全网算力", report.networkhash)
-             +infobox("fa fa-bars", "区块高度", report.blockheight)
-             +infobox("fa fa-snowflake-o", "雪地狂欢", report.snowfield)
-             +infobox("fa fa-btc", "雪地狂欢", report.poolfee)
+             +infobox("fa fa-arrows", "pool hash rate", poolhash)
+             +infobox("fa fa-cubes", "block found(last 1000 blocks)", report.blockfound.length)
+             +infobox("fa fa-unlock-alt", "difficulty", report.difficulty)
+             +infobox("fa fa-usd", "workers", report.workers)
+             +infobox("fa fa-cog", "network hash rate", report.networkhash)
+             +infobox("fa fa-bars", "block height", report.blockheight)
+             +infobox("fa fa-snowflake-o", "snow field", report.snowfield)
+             +infobox("fa fa-btc", "pool fee", report.poolfee)
            +card("Active Accounts", report.hashrate, "Account", "HashRate")
            +card("Account Shares", report.share, "Account", "Shares")
            +card("Pool Blocks", report.blockfound, "BlockHash", "Height")
